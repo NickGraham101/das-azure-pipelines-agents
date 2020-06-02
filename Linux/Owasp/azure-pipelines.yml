@@ -9,7 +9,7 @@ resources:
     type: github
     name: NickGraham101/dfc-devops
     endpoint: github.com_NickGraham101
-    ref: refs/tags/v1.9.0
+    ref: refs/tags/v1.10.6
 
 pool:
   vmImage: ubuntu-latest

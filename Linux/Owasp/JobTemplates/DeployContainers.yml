@@ -34,4 +34,4 @@ jobs:
             AzureSubscriptionEndpoint: ${{ parameters.AzureSubscriptionEndpoint }}
             KubernetesCluster: ${{ parameters.KubernetesCluster }}
             ManifestFileName: manifest.yml
-            PathToManifest: $(Pipeline.Workspace)/Linux/Owasp
+            PathToManifest: $(Pipeline.Workspace)/NCS.AzureDevOpsAgents.OWASP

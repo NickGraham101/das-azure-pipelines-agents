@@ -14,4 +14,4 @@ jobs:
       DockerfileName: Dockerfile
       ImageBaseName: NCS.AzureDevOpsAgents.OWASP
       ImageTag: $(Build.BuildNumber)
-      ManifestFilePath: manifest.yml
+      ManifestFilePath: Linux/Owasp/manifest.yml

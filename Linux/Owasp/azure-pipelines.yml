@@ -31,7 +31,6 @@ pr:
 
 stages:
 - stage: BuildAndPublishContainers
-  condition: or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), eq(variables['Build.Reason'], 'PullRequest'))
   dependsOn: []
   variables:
   - group: owasp-k8s-test
@@ -42,7 +41,7 @@ stages:
       ContainerRegistryPassword: $(ContainerRegistryPassword)
 
 - stage: DeployAzureDevOpsContainers
-  condition: and(succeeded('BuildAndPublishContainers'), eq(variables['Build.SourceBranch'], 'refs/heads/master'), ne(variables['Build.Reason'], 'PullRequest'))
+  condition: and(succeeded('BuildAndPublishContainers'), ne(variables['Build.Reason'], 'PullRequest'))
   dependsOn: BuildAndPublishContainers
   variables:
   - template: VariableTemplates\SharedEnvironmentVariables.yml

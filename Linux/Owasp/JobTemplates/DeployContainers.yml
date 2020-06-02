@@ -31,5 +31,5 @@ jobs:
             AksResourceGroup: ${{ parameters.AksResourceGroup }}
             AzureSubscriptionEndpoint: ${{ parameters.AzureSubscriptionEndpoint }}
             KubernetesCluster: ${{ parameters.KubernetesCluster }}
-            ManifestFileName: owasp-agent.kubernetes.yml
-            PathToManifest: $(Pipeline.Workspace)/NCS.AzureDevOpsAgents.OWASP
+            ManifestFileName: manifest.yml
+            PathToManifest: $(Pipeline.Workspace)/Linux/Owasp

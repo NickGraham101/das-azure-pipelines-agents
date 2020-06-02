@@ -1,0 +1,58 @@
+variables:
+- name: SolutionBaseName
+  value: Dfc.DevOps
+
+resources:
+  repositories:
+  - repository: self
+  - repository: dfc-devops
+    type: github
+    name: NickGraham101/dfc-devops
+    endpoint: github.com_NickGraham101
+    ref: refs/tags/v1.9.0
+
+pool:
+  vmImage: ubuntu-latest
+  demands:
+    - PowerShell
+    - AzurePS
+    - docker
+
+trigger:
+  branches:
+    include:
+    - master
+
+pr:
+  branches:
+    include:
+    - master
+
+
+stages:
+- stage: BuildAndPublishContainers
+  condition: or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), eq(variables['Build.Reason'], 'PullRequest'))
+  dependsOn: []
+  variables:
+  - group: owasp-k8s-test
+  jobs:
+  - template: JobTemplates\BuildAndPublishLinuxContainers.yml
+    parameters:
+      ContainerRegistryAdminUser: $(ContainerRegistryAdminUser)
+      ContainerRegistryPassword: $(ContainerRegistryPassword)
+
+- stage: DeployAzureDevOpsContainers
+  condition: and(succeeded('BuildAndPublishContainers'), eq(variables['Build.SourceBranch'], 'refs/heads/master'), ne(variables['Build.Reason'], 'PullRequest'))
+  dependsOn: BuildAndPublishContainers
+  variables:
+  - template: VariableTemplates\SharedEnvironmentVariables.yml
+  - template: VariableTemplates\DevEnvironmentVariables.yml
+  - group: owasp-k8s-test
+  jobs:
+  - template: JobTemplates\DeployContainers.yml
+    parameters:
+      AksResourceGroup: $(sharedResourceGroup)
+      AzurePatToken: $(AzureDevOpsAgentPatToken)
+      AzureSubscriptionEndpoint: 'Pay-As-You-Go (be945e1a-9f8e-460f-ba15-8d7f73e9e2e0)'
+      Environment: DEV_SHARED
+      KubernetesCluster: $(sharedAksCluster)

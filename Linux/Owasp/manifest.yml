@@ -24,8 +24,8 @@ spec:
             cpu: 250m
             memory: "500M"
           limits:
-            cpu: 2000m
-            memory: "4G"
+            cpu: 500m
+            memory: "1000M"
         env:
         - name: AZP_AGENT_NAME
           value: ncs-owasp-__NCSAzureDevOpsAgentsOWASPTag__-agent-1

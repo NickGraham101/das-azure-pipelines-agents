@@ -21,8 +21,8 @@ spec:
         image: gandttestsharedcr.azurecr.io/ncs.azuredevopsagents.owasp:__NCSAzureDevOpsAgentsOWASPTag__
         resources:
           requests:
-            cpu: 0m
-            memory: "0M"
+            cpu: 50m
+            memory: "500M"
           limits:
             cpu: 2000m
             memory: "4G"
